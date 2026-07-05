@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerData" format=3 uid="uid://joge2mtjtvch"]
+
+[ext_resource type="Script" uid="uid://i4sgano0jirh" path="res://resources/PlayerData.gd" id="1_imwi1"]
+
+[resource]
+script = ExtResource("1_imwi1")
+id = "p1"
+character_name = "Explorador"
+max_hp = 120
+max_energy = 3
+passive_id = "explorer"
+passive_description = "Revela uma carta aleatória ao entrar em uma sala."
+metadata/_custom_type_script = "uid://i4sgano0jirh"

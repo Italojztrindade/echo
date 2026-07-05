@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://61djaeiid6v4"]
+
+[ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_egsg6"]
+[ext_resource type="Texture2D" uid="uid://cowuvmqu5uh2t" path="res://assets/esqueleto_card.png" id="1_htwxu"]
+
+[resource]
+script = ExtResource("1_egsg6")
+id = "esqueleto_01"
+image = ExtResource("1_htwxu")
+metadata/_custom_type_script = "uid://ht5biomtdits"

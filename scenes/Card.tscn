@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://boqjoxvtogyss"]
+
+[ext_resource type="Script" uid="uid://c2s5v40dloiha" path="res://scenes/Card.gd" id="1_yiag5"]
+[ext_resource type="Texture2D" uid="uid://dmxdyx54c34jt" path="res://assets/Frente.png" id="3_qf083"]
+
+[node name="CardView" type="TextureButton" unique_id=196629702]
+custom_minimum_size = Vector2(100, 140)
+offset_right = 40.0
+offset_bottom = 40.0
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("1_yiag5")
+card_back_texture = ExtResource("3_qf083")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1785240703]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5

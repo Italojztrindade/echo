@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Echobound"
+run/main_scene="uid://ckqcobaatb424"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[autoload]
+
+SignalBus="*uid://dmnhgqf5tbyt1"
+CardManager="*uid://bfqdr1c0sqv6u"
+AffinityManager="*uid://igin8yj8lac7"
+CombatManager="*uid://cqk4syw025e1c"
+RunManager="*uid://dlncs7yjk0t5g"
+InventoryManager="*uid://blpe7wx0qiagh"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[xr]
+
+openxr/extensions/spatial_entity/enable_spatial_anchors=true
+openxr/extensions/spatial_entity/enable_persistent_anchors=true
+openxr/extensions/spatial_entity/enable_builtin_anchor_detection=true

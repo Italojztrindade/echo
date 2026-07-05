@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://dx6ufoftyd37j"]
+
+[ext_resource type="Script" uid="uid://dh0o1wqye1rdo" path="res://ui/HUD.gd" id="1_qpvh6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1x8ju"]
+bg_color = Color(0, 0.627451, 0, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=1161855548]
+script = ExtResource("1_qpvh6")
+
+[node name="UI" type="Control" parent="." unique_id=1891673998]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlayerStats" type="VBoxContainer" parent="UI" unique_id=170669722]
+layout_mode = 0
+offset_top = 567.0
+offset_right = 132.0
+offset_bottom = 706.0
+mouse_filter = 2
+
+[node name="HPLabel" type="Label" parent="UI/PlayerStats" unique_id=1826652243]
+layout_mode = 2
+
+[node name="HPBar" type="ProgressBar" parent="UI/PlayerStats" unique_id=168397749]
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+mouse_filter = 2
+show_percentage = false
+
+[node name="EnergyLabel" type="Label" parent="UI/PlayerStats" unique_id=211571614]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnergyBar" type="ProgressBar" parent="UI/PlayerStats" unique_id=740228961]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_1x8ju")
+show_percentage = false
+
+[node name="AbilityButton" type="Button" parent="UI/PlayerStats" unique_id=1279596453]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Usar Habilidade"
+text_overrun_behavior = 4
+
+[node name="EnemyStats" type="VBoxContainer" parent="UI" unique_id=425352477]
+layout_mode = 0
+offset_left = 1021.0
+offset_right = 1153.0
+offset_bottom = 72.0
+mouse_filter = 2
+
+[node name="HPLabel" type="Label" parent="UI/EnemyStats" unique_id=30305241]
+layout_mode = 2
+
+[node name="HPBar" type="ProgressBar" parent="UI/EnemyStats" unique_id=736871745]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SpecialContainer" type="VBoxContainer" parent="UI" unique_id=463308364]
+custom_minimum_size = Vector2(136, 0)
+layout_mode = 0
+offset_top = 542.0
+offset_right = 136.0
+offset_bottom = 582.0
+
+[node name="SpecialButton" type="Button" parent="UI/SpecialContainer" unique_id=1242993967]
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Especial"
+text_overrun_behavior = 4
+
+[node name="FloorLabel" type="Label" parent="." unique_id=238236785]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.0
+offset_right = 45.0
+offset_bottom = 37.0
+grow_horizontal = 2

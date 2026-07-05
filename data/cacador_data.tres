@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerData" format=3 uid="uid://bgps3khvtppbf"]
+
+[ext_resource type="Script" uid="uid://i4sgano0jirh" path="res://resources/PlayerData.gd" id="1_egcsr"]
+
+[resource]
+script = ExtResource("1_egcsr")
+id = "p3"
+character_name = "Caçador"
+max_hp = 100
+max_energy = 4
+passive_id = "hunter"
+passive_description = "Combos causam dano adicional."
+metadata/_custom_type_script = "uid://i4sgano0jirh"

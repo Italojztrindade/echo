@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cf4xy5yjeuiv0"]
+
+[ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_ac8ou"]
+[ext_resource type="Texture2D" uid="uid://do6bsbhtjxnjw" path="res://assets/spider_card.png" id="1_tscel"]
+
+[resource]
+script = ExtResource("1_ac8ou")
+id = "aranha_01"
+image = ExtResource("1_tscel")
+metadata/_custom_type_script = "uid://ht5biomtdits"

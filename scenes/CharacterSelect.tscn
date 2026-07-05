@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://ckqcobaatb424"]
+
+[ext_resource type="Script" uid="uid://c2ip56262ov5e" path="res://scenes/CharacterSelect.gd" id="1_rpq25"]
+[ext_resource type="Script" uid="uid://i4sgano0jirh" path="res://resources/PlayerData.gd" id="2_gk21y"]
+[ext_resource type="Resource" uid="uid://joge2mtjtvch" path="res://data/explorador_data.tres" id="3_uq28m"]
+[ext_resource type="Resource" uid="uid://b8s23ksuupy2e" path="res://data/arcanista_data.tres" id="4_d8y2c"]
+[ext_resource type="Resource" uid="uid://bgps3khvtppbf" path="res://data/cacador_data.tres" id="5_7rt4t"]
+
+[node name="CharacterSelect" type="HBoxContainer" unique_id=1810226859]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -132.0
+offset_right = 256.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+alignment = 1
+script = ExtResource("1_rpq25")
+characters = Array[ExtResource("2_gk21y")]([ExtResource("3_uq28m"), ExtResource("4_d8y2c"), ExtResource("5_7rt4t")])
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=537635007]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="BtnExplorer" type="Button" parent="HBoxContainer" unique_id=1013504824]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="BtnArcanist" type="Button" parent="HBoxContainer" unique_id=1698745777]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="BtnHunter" type="Button" parent="HBoxContainer" unique_id=187605883]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2

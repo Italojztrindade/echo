@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bsuqp66pmvvox"]
+
+[ext_resource type="Script" uid="uid://d4gkamogy0m2h" path="res://InventoryScreen.gd" id="1_12pr3"]
+
+[node name="InventoryScreen" type="Control" unique_id=1087915625]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_12pr3")
+
+[node name="Background" type="Panel" parent="." unique_id=2082309521]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1965889771]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -140.0
+offset_right = 320.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1242500846]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainVBox" unique_id=546340065]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainVBox/VBoxContainer" unique_id=1401040225]
+layout_mode = 2
+
+[node name="BodyVBox" type="VBoxContainer" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer" unique_id=1745605056]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=1123653809]
+layout_mode = 2
+text = "Equipamentos"
+
+[node name="HeadButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=1102550473]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cabeça: Vazio"
+
+[node name="ChestButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=945559815]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Torso: Vazio"
+
+[node name="AmuletButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=1942984929]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Amuleto: Vazio"
+
+[node name="WeaponButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=2005445789]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mão: Vazio"
+
+[node name="RingButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BodyVBox" unique_id=1778517808]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Anel: Vazio"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer" unique_id=478317211]
+layout_mode = 2
+
+[node name="BagVBox" type="VBoxContainer" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer" unique_id=1736176848]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BagVBox" unique_id=1767845020]
+layout_mode = 2
+text = "Mochila"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BagVBox" unique_id=112856636]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BagGrid" type="GridContainer" parent="MarginContainer/MainVBox/VBoxContainer/HBoxContainer/BagVBox/ScrollContainer" unique_id=2648716]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+
+[node name="GoToCombatButton" type="Button" parent="MarginContainer/MainVBox/VBoxContainer" unique_id=215709745]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sair e lutar!"

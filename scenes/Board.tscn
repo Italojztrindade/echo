@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b211qgkw5ctjt"]
+
+[ext_resource type="Script" uid="uid://btfil2mvfdvev" path="res://scenes/Board.gd" id="1_wlyqt"]
+[ext_resource type="PackedScene" uid="uid://boqjoxvtogyss" path="res://scenes/Card.tscn" id="2_wxh2q"]
+[ext_resource type="Texture2D" uid="uid://dmxdyx54c34jt" path="res://assets/Frente.png" id="3_wxh2q"]
+[ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="4_wxh2q"]
+[ext_resource type="Resource" uid="uid://big6swhlhw1mt" path="res://data/goblin_card.tres" id="5_w8n1y"]
+[ext_resource type="Resource" uid="uid://cww7qm20v0a15" path="res://data/lobo_card.tres" id="6_gc1oq"]
+[ext_resource type="Resource" uid="uid://tkdon673d5vy" path="res://data/morcego_card.tres" id="7_xxb6b"]
+[ext_resource type="Resource" uid="uid://cf4xy5yjeuiv0" path="res://data/aranha_card.tres" id="8_qtc5n"]
+[ext_resource type="Resource" uid="uid://beau4ln8441qf" path="res://data/zumbi_card.tres" id="9_23q4v"]
+[ext_resource type="PackedScene" uid="uid://dx6ufoftyd37j" path="res://ui/HUD.tscn" id="9_wxh2q"]
+[ext_resource type="Resource" uid="uid://cixphysigec8m" path="res://data/troll_card.tres" id="10_s421v"]
+[ext_resource type="Resource" uid="uid://d2mps61nxam3o" path="res://data/slime_card.tres" id="11_aqpwq"]
+[ext_resource type="Resource" uid="uid://bfp6jghgb0fsi" path="res://data/ogro_card.tres" id="12_y61op"]
+[ext_resource type="Resource" uid="uid://b5s8hl7vdy7kl" path="res://data/orc_card.tres" id="13_q282n"]
+
+[node name="Board" type="Control" unique_id=1191227879]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wlyqt")
+card_scene = ExtResource("2_wxh2q")
+card_back_image = ExtResource("3_wxh2q")
+deck_data = Array[ExtResource("4_wxh2q")]([ExtResource("5_w8n1y"), ExtResource("6_gc1oq")])
+available_card_types = Array[ExtResource("4_wxh2q")]([ExtResource("7_xxb6b"), ExtResource("8_qtc5n"), ExtResource("9_23q4v"), ExtResource("10_s421v"), ExtResource("11_aqpwq"), ExtResource("12_y61op"), ExtResource("6_gc1oq"), ExtResource("13_q282n")])
+
+[node name="HUD" parent="." unique_id=1161855548 instance=ExtResource("9_wxh2q")]
+
+[node name="BoardCenter" type="CenterContainer" parent="." unique_id=725114094]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="BoardCenter" unique_id=36862343]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 15
+columns = 4

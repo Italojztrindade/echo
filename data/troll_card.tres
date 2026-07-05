@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cixphysigec8m"]
+
+[ext_resource type="Texture2D" uid="uid://csik380mwsin1" path="res://assets/troll_card.png" id="1_wt18w"]
+[ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_xpyjb"]
+
+[resource]
+script = ExtResource("1_xpyjb")
+id = "troll_01"
+image = ExtResource("1_wt18w")
+metadata/_custom_type_script = "uid://ht5biomtdits"
