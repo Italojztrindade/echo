@@ -11,6 +11,8 @@ extends CanvasLayer
 
 @onready var enemy_hp_label: Label = $UI/EnemyStats/HPLabel
 @onready var enemy_hp_bar: ProgressBar = $UI/EnemyStats/HPBar
+@onready var enemy_mp_label: Label = $UI/EnemyStats/EnemyMPLabel
+var current_enemy_name: String = ""
 
 @onready var floor_label: Label = $FloorLabel
 
@@ -19,6 +21,7 @@ func _ready() -> void:
 	# Inscreve-se nos eventos do SignalBus
 	SignalBus.player_hp_changed.connect(_on_player_hp_changed)
 	SignalBus.enemy_hp_changed.connect(_on_enemy_hp_changed)
+	SignalBus.enemy_setup.connect(_on_enemy_setup)
 	special_button.visible = false
 	SignalBus.special_charged.connect(_on_special_charged)
 	special_button.pressed.connect(_on_special_button_pressed)
@@ -71,9 +74,19 @@ func _on_player_hp_changed(current_hp: int, max_hp: int) -> void:
 	player_hp_bar.value = current_hp
 
 func _on_enemy_hp_changed(current_hp: int, max_hp: int) -> void:
-	enemy_hp_label.text = "Inimigo: %d / %d" % [current_hp, max_hp]
+	enemy_hp_label.text = current_enemy_name + ": %d / %d" % [current_hp, max_hp]
 	enemy_hp_bar.max_value = max_hp
 	enemy_hp_bar.value = current_hp
+
+func _on_enemy_setup(enemy_name: String, max_hp: int, max_mp: int) -> void:
+	current_enemy_name = enemy_name
+	# 1. Configura o HP inicial e já coloca o nome do monstro real no lugar de "Inimigo: ?"
+	enemy_hp_label.text = enemy_name + ": %d / %d" % [max_hp, max_hp]
+	enemy_hp_bar.max_value = max_hp
+	enemy_hp_bar.value = max_hp
+	
+	# 2. Configura o MP que você acabou de adicionar
+	enemy_mp_label.text = "MP: " + str(max_mp)
 	
 func _on_energy_changed(current_energy: int) -> void:
 	energy_bar.value = current_energy

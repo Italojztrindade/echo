@@ -5,10 +5,9 @@ extends Resource
 @export var character_name: String
 @export_multiline var description: String
 
-
 @export_category("Base Stats")
-@export var max_hp: int
-@export var max_energy: int
+@export var stats: CharacterStats
+
 
 @export_category("Passive Skill")
 # Identificador único. Ex: "explorer", "arcanist", "hunter"

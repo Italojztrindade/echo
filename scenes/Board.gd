@@ -31,11 +31,11 @@ func _ready() -> void:
 			card.hide_card()
 	SignalBus.is_board_locked = false
 	# Consome o estado dinâmico do RunManager
-	var enemy = RunManager.get_current_enemy()
+	var enemy = RunManager.get_next_enemy()
 	
 	if RunManager.current_player != null and enemy != null:
 		CombatManager.start_combat(RunManager.current_player, enemy)
-		print("Andar ", RunManager.current_floor, " iniciado contra ", enemy.enemy_name)
+		print("Andar ", RunManager.current_floor, " iniciado contra ", enemy.card_name)
 	else:
 		push_warning("Atenção: Falha ao carregar estado da Run.")
 		

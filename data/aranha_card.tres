@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_ac8ou"]
 [ext_resource type="Texture2D" uid="uid://do6bsbhtjxnjw" path="res://assets/spider_card.png" id="1_tscel"]
+[ext_resource type="Resource" uid="uid://bxsovbripcx1q" path="res://data/status_aranha.tres" id="3_vn7vj"]
 
 [resource]
 script = ExtResource("1_ac8ou")
 id = "aranha_01"
+card_name = "Aranha"
+stats = ExtResource("3_vn7vj")
 image = ExtResource("1_tscel")
 metadata/_custom_type_script = "uid://ht5biomtdits"

@@ -1,13 +1,20 @@
 [gd_resource type="Resource" script_class="PlayerData" format=3 uid="uid://bgps3khvtppbf"]
 
 [ext_resource type="Script" uid="uid://i4sgano0jirh" path="res://resources/PlayerData.gd" id="1_egcsr"]
+[ext_resource type="Script" uid="uid://c17xjpglpupvk" path="res://resources/CharacterStats.gd" id="2_kfsh7"]
+
+[sub_resource type="Resource" id="Resource_1ngdd"]
+script = ExtResource("2_kfsh7")
+base_attack = 7
+base_defense = 1
+base_luck = 15
+metadata/_custom_type_script = "uid://c17xjpglpupvk"
 
 [resource]
 script = ExtResource("1_egcsr")
 id = "p3"
 character_name = "Caçador"
-max_hp = 100
-max_energy = 4
+stats = SubResource("Resource_1ngdd")
 passive_id = "hunter"
 passive_description = "Combos causam dano adicional."
 metadata/_custom_type_script = "uid://i4sgano0jirh"

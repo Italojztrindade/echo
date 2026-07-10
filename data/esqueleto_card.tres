@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_egsg6"]
 [ext_resource type="Texture2D" uid="uid://cowuvmqu5uh2t" path="res://assets/esqueleto_card.png" id="1_htwxu"]
+[ext_resource type="Resource" uid="uid://dwb5hhxmepar8" path="res://data/status_esqueleto.tres" id="3_srksq"]
 
 [resource]
 script = ExtResource("1_egsg6")
 id = "esqueleto_01"
+card_name = "Esqueleto"
+stats = ExtResource("3_srksq")
 image = ExtResource("1_htwxu")
 metadata/_custom_type_script = "uid://ht5biomtdits"

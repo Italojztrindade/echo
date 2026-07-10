@@ -27,6 +27,7 @@ signal ability_activated() # O botão do HUD vai emitir isso
 signal enemy_hp_changed(current_hp: int, max_hp: int)
 signal enemy_defeated()
 signal game_over()
+signal enemy_setup(enemy_name: String, max_hp: int, max_mp: int)
 
 # Sinais do Ataque Especial (Ultimate)
 signal special_charged() # Acende o botão no HUD

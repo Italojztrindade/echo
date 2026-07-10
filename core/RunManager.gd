@@ -2,15 +2,34 @@ extends Node
 
 var current_player: PlayerData = null
 var current_player_hp: int = 0
+var has_special_stored: bool = false
 var current_floor: int = 1
 
-# Banco de dados de inimigos para a run. 
-# Adicione os caminhos corretos dos seus arquivos .tres de inimigos.
-var _enemy_pool: Array[Resource] = [
-	preload("res://data/slime_data.tres"),
-	preload("res://data/goblin_data.tres")
-	# preload("res://data/goblin_data.tres"), etc...
+# --- POOLS DE INIMIGOS POR DIFICULDADE ---
+# Preload garante que o arquivo já esteja carregado na memória para evitar travamentos na hora de instanciar
+
+var tier_1_enemies: Array[Resource] = [
+	preload("res://data/slime_card.tres"),
+	preload("res://data/morcego_card.tres")
 ]
+
+var tier_2_enemies: Array[Resource] = [
+	preload("res://data/aranha_card.tres"),
+	preload("res://data/goblin_card.tres"),
+	preload("res://data/zumbi_card.tres")
+]
+
+var tier_3_enemies: Array[Resource] = [
+	preload("res://data/lobo_card.tres"),
+	preload("res://data/esqueleto_card.tres")
+]
+
+var tier_4_enemies: Array[Resource] = [
+	preload("res://data/orc_card.tres"),
+	preload("res://data/troll_card.tres")
+]
+
+var boss_enemy: Resource = preload("res://data/ogro_card.tres")
 
 func _ready() -> void:
 	# Escuta quando o combate atual terminar
@@ -19,27 +38,45 @@ func _ready() -> void:
 # Método chamado pela tela de seleção para inicializar a sessão
 func start_new_run(player_data: PlayerData) -> void:
 	current_player = player_data
-	current_player_hp = player_data.max_hp
+	current_player_hp = player_data.stats.max_hp
 	CombatManager.reset_combat_state()
 	current_floor = 1
 	
 	get_tree().change_scene_to_file("res://scenes/PreparationScreen.tscn")
 
-# Retorna o inimigo do andar atual (faz um loop na lista se chegarmos ao fim)
-func get_current_enemy() -> EnemyData:
-	if _enemy_pool.size() == 0:
-		return null
+func get_next_enemy() -> Resource:
+	var pool_to_use: Array[Resource] = []
 	
-	var index = (current_floor - 1) % _enemy_pool.size()
-	return _enemy_pool[index] as EnemyData
+	# Mapeamento dos andares para a dificuldade correspondente
+	if current_floor <= 2:
+		pool_to_use = tier_1_enemies
+	elif current_floor <= 4:
+		pool_to_use = tier_2_enemies
+	elif current_floor <= 6:
+		pool_to_use = tier_3_enemies
+	elif current_floor == 7:
+		pool_to_use = tier_4_enemies
+	else:
+		# Andar 8 (ou maior) é o Boss garantido!
+		print("Andar final alcançado! Invocando o Boss.")
+		return boss_enemy 
+		
+	# Sorteia um índice aleatório dentro do tamanho da pool escolhida
+	var random_index = randi() % pool_to_use.size()
+	var sorted_enemy = pool_to_use[random_index]
+	
+	print("Andar ", current_floor, " gerado. Inimigo sorteado: ", sorted_enemy.resource_path)
+	
+	return sorted_enemy
+# Retorna o inimigo do andar atual (faz um loop na lista se chegarmos ao fim)
 
 func _on_enemy_defeated() -> void:
 	current_floor += 1
 	print("Inimigo derrotado! Avançando para o andar ", current_floor)
 	
 	# Aguarda um breve momento para o jogador ver o inimigo morrer, depois recarrega a sala
-	await get_tree().create_timer(1.5).timeout
-	get_tree().reload_current_scene()
+	# await get_tree().create_timer(1.5).timeout
+	# get_tree().reload_current_scene()
 	
 func reset_run() -> void:
 	current_floor = 1

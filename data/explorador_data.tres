@@ -1,13 +1,21 @@
 [gd_resource type="Resource" script_class="PlayerData" format=3 uid="uid://joge2mtjtvch"]
 
 [ext_resource type="Script" uid="uid://i4sgano0jirh" path="res://resources/PlayerData.gd" id="1_imwi1"]
+[ext_resource type="Script" uid="uid://c17xjpglpupvk" path="res://resources/CharacterStats.gd" id="2_ueqvp"]
+
+[sub_resource type="Resource" id="Resource_ene3l"]
+script = ExtResource("2_ueqvp")
+max_hp = 25
+base_defense = 2
+base_luck = 8
+max_mp = 6
+metadata/_custom_type_script = "uid://c17xjpglpupvk"
 
 [resource]
 script = ExtResource("1_imwi1")
 id = "p1"
 character_name = "Explorador"
-max_hp = 120
-max_energy = 3
+stats = SubResource("Resource_ene3l")
 passive_id = "explorer"
 passive_description = "Revela uma carta aleatória ao entrar em uma sala."
 metadata/_custom_type_script = "uid://i4sgano0jirh"

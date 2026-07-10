@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_ddpbw"]
 [ext_resource type="Texture2D" uid="uid://c0b5whmi5eulo" path="res://assets/wolf_card.png" id="1_y6i4e"]
+[ext_resource type="Resource" uid="uid://vxdheoukv0ly" path="res://data/status_lobo.tres" id="3_l2ww4"]
 
 [resource]
 script = ExtResource("1_ddpbw")
 id = "lobo_01"
 card_name = "Lobo"
+stats = ExtResource("3_l2ww4")
 family = "Lobo"
 image = ExtResource("1_y6i4e")
 metadata/_custom_type_script = "uid://ht5biomtdits"

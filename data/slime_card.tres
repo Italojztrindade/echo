@@ -2,9 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://c0xsix8m6q8ui" path="res://assets/slime_card.png" id="1_yt8pi"]
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="2_g67b8"]
+[ext_resource type="Resource" uid="uid://dva34quil5skd" path="res://data/status_slime.tres" id="3_g67b8"]
 
 [resource]
 script = ExtResource("2_g67b8")
 id = "slime_01"
+card_name = "Slime"
+stats = ExtResource("3_g67b8")
 image = ExtResource("1_yt8pi")
 metadata/_custom_type_script = "uid://ht5biomtdits"

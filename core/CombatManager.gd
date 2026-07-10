@@ -7,7 +7,7 @@ var _current_energy: int = 0
 
 
 # Estado do Inimigo
-var _current_enemy_data: EnemyData
+var _current_enemy_data: CardData
 var _enemy_current_hp: int = 0
 
 # Dano base do jogador ao acertar um par (pode ser alterado por relíquias/afinidade depois)
@@ -49,25 +49,33 @@ func _ready() -> void:
 # --- INICIALIZAÇÃO DO COMBATE ---
 
 # O RunManager chamará isso quando a run começar ou trocar de sala
-func start_combat(player: PlayerData, enemy: EnemyData) -> void:
+func start_combat(player: PlayerData, enemy: CardData) -> void:
 	_player_data = player
 	_current_enemy_data = enemy
 	
 	_player_current_hp = RunManager.current_player_hp
-	_enemy_current_hp = _current_enemy_data.hp
+	_enemy_current_hp = _current_enemy_data.stats.max_hp
 	# Inicializa HP (se for início de run. Se for entre salas, o HP do jogador é mantido)
 	if _player_current_hp == 0:
-		_player_current_hp = _player_data.max_hp
+		_player_current_hp = _player_data.stats.max_hp
 		
 	_configure_passives()
-	print("Combate Iniciado: ", player.character_name, " vs ", enemy.enemy_name)
+	_has_special_stored = RunManager.has_special_stored
+	if _has_special_stored:
+		# Pequeno delay pro frame renderizar a UI antes de mandar o sinal de ativação visual
+		await get_tree().process_frame 
+		SignalBus.special_charged.emit()
+		print("Combate Iniciado: ", player.character_name, " vs ", enemy.card_name)
+	
+	SignalBus.enemy_setup.emit(enemy.card_name, enemy.stats.max_hp, enemy.stats.max_mp)
 	
 	SignalBus.floor_changed.emit(RunManager.current_floor)
+	SignalBus.energy_changed.emit(_current_energy)
 	# Atualiza a UI inicial
 	
 	SignalBus.energy_changed.emit(_current_energy)
-	SignalBus.player_hp_changed.emit(_player_current_hp, _player_data.max_hp)
-	SignalBus.enemy_hp_changed.emit(_enemy_current_hp, _current_enemy_data.hp)
+	SignalBus.player_hp_changed.emit(_player_current_hp, _player_data.stats.max_hp)
+	SignalBus.enemy_hp_changed.emit(_enemy_current_hp, _current_enemy_data.stats.max_hp)
 
 # --- REGRAS DE NEGÓCIO ---
 func _configure_passives() -> void:
@@ -95,7 +103,7 @@ func _on_pair_failed() -> void:
 	
 	if _current_enemy_data != null and _enemy_current_hp > 0:
 		_gain_energy(1)
-		_deal_damage_to_player(_current_enemy_data.damage)
+		_deal_damage_to_player(_current_enemy_data.stats.base_attack)
 		print("Erro! Processou apenas FAIL.")
 		
 	# Destrava no próximo frame
@@ -123,38 +131,62 @@ func _consume_energy(amount: int) -> void:
 # --- PROCESSAMENTO DE DANO ---
 
 func _deal_damage_to_enemy(amount: int) -> void:
-	var final_damage = amount
-	
+	# 1. Dano Base (Ataque natural + Equipamentos)
 	var bonus_damage = InventoryManager.get_total_modifier("damage")
-	final_damage += bonus_damage
-	# 1. Aplica modificadores (Habilidade do Caçador)
+	# Transformamos em FLOAT para não perder casas decimais durante as multiplicações
+	var dano_calculado: float = float(amount + bonus_damage) 
+	
+	print("\n--- INÍCIO DO CÁLCULO DE DANO ---")
+	print("Base: ", amount, " | Bônus Equip: ", bonus_damage, " | Subtotal: ", dano_calculado)
+
+	# 2. Multiplicador do Caçador
 	if _hunter_energy_consumed > 0:
-		var multiplicador = 1.0 + (float(_hunter_energy_consumed) * 0.1)
-		final_damage = int(amount * multiplicador)
+		var multiplicador_cacador = 1.0 + (float(_hunter_energy_consumed) * 0.1)
+		dano_calculado *= multiplicador_cacador
 		_hunter_energy_consumed = 0 # Reseta o multiplicador
-		print("Ataque do Caçador! Multiplicador: x", multiplicador, " | Dano Final: ", final_damage)
+		print("Passiva Caçador (x", multiplicador_cacador, ") -> Subtotal: ", dano_calculado)
+
+	# 3. Multiplicador de Crítico (Sorte)
+	var player_luck = 10 # Temporário até o CharacterStats.gd
+	var is_critical = (randi() % 100) < player_luck
+	if is_critical:
+		dano_calculado *= 1.5 # Crítico causa 50% de dano extra
+		print("ACERTO CRÍTICO! (x1.5) -> Subtotal: ", dano_calculado)
+
+	# 4. Multiplicador Especial (Se ativado)
 	if _special_active_this_turn:
-		final_damage *= 2
-		_special_active_this_turn = false # Consome a ativação após o golpe
-		print("CRÍTICO ESPECIAL APLICADO! Dano dobrado!")
-	# 2. Subtrai o HP real e trava no zero
+		dano_calculado *= 2.0
+		_special_active_this_turn = false # Consome o brilho do botão
+		print("ATAQUE ESPECIAL! (x2.0) -> Subtotal: ", dano_calculado)
+
+	# 5. Fechamento: Defesa Inimiga e Conversão para Inteiro
+	var enemy_defense = 2 # Temporário
+	
+	# Agora sim convertemos o montante total de volta para Int e subtraímos a defesa
+	var final_damage: int = int(dano_calculado) - enemy_defense
+	final_damage = max(1, final_damage) # Garante que cause no mínimo 1 de dano
+	
+	print("Defesa Inimiga: -", enemy_defense, " | DANO FINAL APLICADO: ", final_damage)
+	print("---------------------------------\n")
+	
+	# 6. Subtrai o HP real e trava no zero
 	_enemy_current_hp -= final_damage
 	_enemy_current_hp = max(0, _enemy_current_hp)
+	SignalBus.enemy_hp_changed.emit(_enemy_current_hp, _current_enemy_data.stats.max_hp)
 	
-	print("Inimigo recebeu ", final_damage, " de dano. HP restante: ", _enemy_current_hp)
-	SignalBus.enemy_hp_changed.emit(_enemy_current_hp, _current_enemy_data.hp)
-	
-	# 3. Verifica morte
+	# 7. Verifica morte
 	if _enemy_current_hp <= 0:
 		_win_battle()
 		RunManager.current_player_hp = _player_current_hp
 		SignalBus.enemy_defeated.emit()
-	else:
-		pass
 
 func _deal_damage_to_player(amount: int) -> void:
 	var final_damage = amount
 	
+	var enemy_luck = 5 # Inimigo tem 5% de chance de crítico
+	if (randi() % 100) < enemy_luck:
+		final_damage = int(final_damage * 1.5)
+		print("Golpe Crítico do Inimigo!")
 	# 1. Aplica modificadores defensivos (Habilidade do Arcanista)
 	if _arcanist_shield_active:
 		_arcanist_shield_active = false # Escudo quebra após um uso
@@ -166,12 +198,21 @@ func _deal_damage_to_player(amount: int) -> void:
 			final_damage = 0
 			print("A Barreira do Arcanista bloqueou 100% do ataque do lacaio!")
 			
+	# --- NOVO: Aplica a Defesa do Jogador ---
+	# Só calcula a armadura se o jogador ainda for tomar algum dano após a barreira
+	if final_damage > 0:
+		var player_defense = 4 # Temporário
+		# No futuro: player_defense += InventoryManager.get_total_modifier("defense")
+		
+		final_damage -= player_defense
+		final_damage = max(1, final_damage) # Garante dano mínimo de 1
+		
 	# 2. Subtrai o HP real e trava no zero
 	_player_current_hp -= final_damage
 	_player_current_hp = max(0, _player_current_hp)
 	
 	print("Jogador recebeu ", final_damage, " de dano. HP restante: ", _player_current_hp)
-	SignalBus.player_hp_changed.emit(_player_current_hp, _player_data.max_hp)
+	SignalBus.player_hp_changed.emit(_player_current_hp, _player_data.stats.max_hp)
 	
 	# 3. Verifica Game Over
 	if _player_current_hp == 0:
@@ -181,6 +222,7 @@ func _deal_damage_to_player(amount: int) -> void:
 func _on_activate_special_requested() -> void:
 	if _has_special_stored and not _special_active_this_turn:
 		_has_special_stored = false
+		RunManager.has_special_stored = false
 		_special_active_this_turn = true
 		print("[Habilidade] Especial ativado! O próximo acerto neste turno causará Dano x2.")
 		
@@ -223,6 +265,7 @@ func _activate_ability() -> void:
 
 func _on_board_cleared() -> void:
 	_has_special_stored = true
+	RunManager.has_special_stored = true
 	SignalBus.special_charged.emit() # Avisa a UI para fazer o botão brilhar/ficar clicável
 	print("Especial Carregado! Pode ser usado a qualquer momento.")
 # O AffinityManager pode chamar isso quando bater 8 pontos (+20% de dano, por exemplo)

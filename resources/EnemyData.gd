@@ -6,8 +6,7 @@ extends Resource
 @export var is_boss: bool = false
 
 @export_category("Combat Attributes")
-@export var hp: int
-@export var damage: int
+@export var stats: CharacterStats
 
 # Skill pode referenciar o id de uma habilidade ou um tipo enumerado para o EnemyManager processar
 @export var skill: String

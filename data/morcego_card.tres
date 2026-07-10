@@ -2,9 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://cla1ejqoylg7c" path="res://assets/bat_card.png" id="1_nt878"]
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_o3jpc"]
+[ext_resource type="Resource" uid="uid://b8uh0ygwf35bw" path="res://data/status_morcego.tres" id="3_a0jnx"]
 
 [resource]
 script = ExtResource("1_o3jpc")
 id = "morcego_01"
+card_name = "Morcego"
+stats = ExtResource("3_a0jnx")
 image = ExtResource("1_nt878")
 metadata/_custom_type_script = "uid://ht5biomtdits"

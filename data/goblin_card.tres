@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://ht5biomtdits" path="res://resources/CardData.gd" id="1_epndq"]
 [ext_resource type="Texture2D" uid="uid://dwvru8mc77y73" path="res://assets/goblin_warrior.png" id="1_v7e1i"]
+[ext_resource type="Resource" uid="uid://cscms470odyii" path="res://data/status_goblin.tres" id="3_u6j6u"]
 
 [resource]
 script = ExtResource("1_epndq")
 id = "goblin_01"
 card_name = "Goblin Guerreiro"
+stats = ExtResource("3_u6j6u")
 family = "Goblin"
 image = ExtResource("1_v7e1i")
 metadata/_custom_type_script = "uid://ht5biomtdits"
