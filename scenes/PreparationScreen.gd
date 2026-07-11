@@ -49,7 +49,7 @@ func _update_ui() -> void:
 	btn_upgrade_def.disabled = !can_upgrade
 	btn_upgrade_luck.disabled = !can_upgrade
 	
-	if RunManager.current_floor == 0:
+	if RunManager.current_floor <= 0:
 		# Acabou de iniciar a run. Não há o que repetir.
 		repeat_floor_button.visible = false
 		start_combat_button.text = "Iniciar Jornada (Andar 1)"
@@ -59,25 +59,13 @@ func _update_ui() -> void:
 		# Andar do Boss
 		repeat_floor_button.visible = false
 		start_combat_button.text = "Enfrentar o Chefe!"
-		start_combat_button.modulate = Color(0.9, 0.2, 0.2)
+		start_combat_button.modulate = Color(0.9, 0.2, 0.2) # Vermelho Épico
 		
 	else:
 		# Andares normais (1 ao 7)
 		repeat_floor_button.visible = true
 		start_combat_button.text = "Avançar para Andar " + str(RunManager.current_floor + 1)
 		start_combat_button.modulate = Color(1, 1, 1)
-		
-	if RunManager.current_floor >= boss_floor:
-		# Se for o andar do Boss, esconde o botão de repetir
-		repeat_floor_button.visible = false
-		
-		# (Opcional) Muda o texto do botão principal para dar um clima épico
-		start_combat_button.text = "Enfrentar o Chefe!"
-		start_combat_button.modulate = Color(0.9, 0.2, 0.2) # Deixa o botão vermelho
-	else:
-		repeat_floor_button.visible = true
-		start_combat_button.text = "Avançar para o Combate"
-		start_combat_button.modulate = Color(1, 1, 1) # Cor original
 	
 # Função responsável por gastar o ponto e aumentar o status
 func _upgrade_stat(stat_type: String) -> void:
