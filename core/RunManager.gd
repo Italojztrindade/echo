@@ -3,7 +3,7 @@ extends Node
 var current_player: PlayerData = null
 var current_player_hp: int = 0
 var has_special_stored: bool = false
-var current_floor: int = 1
+var current_floor: int = 0
 
 # --- POOLS DE INIMIGOS POR DIFICULDADE ---
 # Preload garante que o arquivo já esteja carregado na memória para evitar travamentos na hora de instanciar
@@ -37,10 +37,10 @@ func _ready() -> void:
 
 # Método chamado pela tela de seleção para inicializar a sessão
 func start_new_run(player_data: PlayerData) -> void:
-	current_player = player_data
+	current_player = player_data.duplicate(true)
 	current_player_hp = player_data.stats.max_hp
 	CombatManager.reset_combat_state()
-	current_floor = 1
+	current_floor = 0
 	
 	get_tree().change_scene_to_file("res://scenes/PreparationScreen.tscn")
 
@@ -71,12 +71,10 @@ func get_next_enemy() -> Resource:
 # Retorna o inimigo do andar atual (faz um loop na lista se chegarmos ao fim)
 
 func _on_enemy_defeated() -> void:
-	current_floor += 1
-	print("Inimigo derrotado! Avançando para o andar ", current_floor)
+	print("Inimigo derrotado! Retornando ao Acampamento...")
 	
-	# Aguarda um breve momento para o jogador ver o inimigo morrer, depois recarrega a sala
-	# await get_tree().create_timer(1.5).timeout
-	# get_tree().reload_current_scene()
+	# Retorna o jogador para a Sala de Preparação (onde ele escolhe se avança ou repete)
+	get_tree().change_scene_to_file("res://scenes/PreparationScreen.tscn")
 	
 func reset_run() -> void:
 	current_floor = 1

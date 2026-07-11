@@ -16,7 +16,8 @@ signal board_cleared() # Emitido quando o jogador acerta o último par
 
 func _ready() -> void:
 	SignalBus.force_reveal_random_card.connect(_on_force_reveal_random_card)
-	
+	SignalBus.is_board_locked = false
+	SignalBus.current_flips = 0
 	SignalBus.game_over.connect(_on_game_over)
 	SignalBus.card_flipped.connect(_on_card_flipped)
 	
@@ -97,12 +98,18 @@ func _on_card_flipped(card_node: Node) -> void:
 		await get_tree().create_timer(1.0).timeout
 		_resolve_turn()
 		
+		if not is_inside_tree():
+			return
+		
 		_flipped_cards.clear()
 		SignalBus.flips_allowed_this_turn = 2 
 		
 		SignalBus.current_flips = 0
 		await get_tree().create_timer(0.3).timeout
 		
+		if not is_inside_tree():
+			return
+			
 		if _matched_pairs >= 8:
 			_reload_board_mid_combat()
 		else:

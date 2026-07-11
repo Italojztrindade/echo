@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bsuqp66pmvvox"]
 
-[ext_resource type="Script" uid="uid://d4gkamogy0m2h" path="res://InventoryScreen.gd" id="1_12pr3"]
+[ext_resource type="Script" uid="uid://d4gkamogy0m2h" path="res://scenes/InventoryScreen.gd" id="1_12pr3"]
 
 [node name="InventoryScreen" type="Control" unique_id=1087915625]
 layout_mode = 3

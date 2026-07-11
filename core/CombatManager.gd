@@ -87,11 +87,13 @@ func _on_pair_matched(_card_data: CardData) -> void:
 	_processing_turn = true
 	if _current_enemy_data != null and _enemy_current_hp > 0:
 		_gain_energy(1)
-		_deal_damage_to_enemy(_base_player_damage)
+		_deal_damage_to_enemy(_player_data.stats.base_attack)
 		print("Sucesso! Processou apenas MATCH.")
 		
 	# Espera a engine virar para o próximo frame (milissegundos) e então destrava
 	await get_tree().process_frame
+	if not is_inside_tree():
+		return
 	_processing_turn = false
 	_ability_used_this_turn = false
 
@@ -133,41 +135,41 @@ func _consume_energy(amount: int) -> void:
 func _deal_damage_to_enemy(amount: int) -> void:
 	# 1. Dano Base (Ataque natural + Equipamentos)
 	var bonus_damage = InventoryManager.get_total_modifier("damage")
-	# Transformamos em FLOAT para não perder casas decimais durante as multiplicações
-	var dano_calculado: float = float(amount + bonus_damage) 
+	var subtotal_inicial = amount + bonus_damage
+	var dano_calculado: float = float(subtotal_inicial) 
 	
 	print("\n--- INÍCIO DO CÁLCULO DE DANO ---")
-	print("Base: ", amount, " | Bônus Equip: ", bonus_damage, " | Subtotal: ", dano_calculado)
-
+	print("Base: %d | Bônus Equip: %d | Subtotal: %.1f" % [amount, bonus_damage, dano_calculado])
+	
 	# 2. Multiplicador do Caçador
 	if _hunter_energy_consumed > 0:
 		var multiplicador_cacador = 1.0 + (float(_hunter_energy_consumed) * 0.1)
 		dano_calculado *= multiplicador_cacador
 		_hunter_energy_consumed = 0 # Reseta o multiplicador
-		print("Passiva Caçador (x", multiplicador_cacador, ") -> Subtotal: ", dano_calculado)
+		print("Passiva Caçador (x%.1f) -> Subtotal: %.1f" % [multiplicador_cacador, dano_calculado])
 
 	# 3. Multiplicador de Crítico (Sorte)
-	var player_luck = 10 # Temporário até o CharacterStats.gd
+	var player_luck = _player_data.stats.base_luck # Temporário até o CharacterStats.gd
 	var is_critical = (randi() % 100) < player_luck
 	if is_critical:
 		dano_calculado *= 1.5 # Crítico causa 50% de dano extra
-		print("ACERTO CRÍTICO! (x1.5) -> Subtotal: ", dano_calculado)
+		print("ACERTO CRÍTICO! (x1.5) -> Subtotal: %.1f" % dano_calculado)
 
 	# 4. Multiplicador Especial (Se ativado)
 	if _special_active_this_turn:
 		dano_calculado *= 2.0
 		_special_active_this_turn = false # Consome o brilho do botão
-		print("ATAQUE ESPECIAL! (x2.0) -> Subtotal: ", dano_calculado)
+		print("ATAQUE ESPECIAL! (x2.0) -> Subtotal: %.1f" % dano_calculado)
 
 	# 5. Fechamento: Defesa Inimiga e Conversão para Inteiro
-	var enemy_defense = 2 # Temporário
+	var enemy_defense = _current_enemy_data.stats.base_defense # Temporário
 	
 	# Agora sim convertemos o montante total de volta para Int e subtraímos a defesa
 	var final_damage: int = int(dano_calculado) - enemy_defense
 	final_damage = max(1, final_damage) # Garante que cause no mínimo 1 de dano
 	
-	print("Defesa Inimiga: -", enemy_defense, " | DANO FINAL APLICADO: ", final_damage)
-	print("---------------------------------\n")
+	print("Defesa Inimiga: %d | DANO FINAL APLICADO: %d" % [enemy_defense, final_damage])
+	print("-----------------------------------\n")
 	
 	# 6. Subtrai o HP real e trava no zero
 	_enemy_current_hp -= final_damage

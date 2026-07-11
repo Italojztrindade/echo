@@ -9,4 +9,5 @@ base_attack = 9
 base_defense = 3
 base_luck = 12
 max_mp = 4
+xp_reward = 60
 metadata/_custom_type_script = "uid://c17xjpglpupvk"

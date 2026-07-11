@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3vir4v20nl5e"]
 
-[ext_resource type="Script" uid="uid://bn3p4cphvhqml" path="res://PreparationScreen.gd" id="1_h4ps4"]
+[ext_resource type="Script" uid="uid://bn3p4cphvhqml" path="res://scenes/PreparationScreen.gd" id="1_h4ps4"]
 
 [node name="PreparationScreen" type="Control" unique_id=1860817324]
 layout_mode = 3
@@ -36,6 +36,29 @@ grow_vertical = 2
 [node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=478695532]
 layout_mode = 2
 
+[node name="LevelInfoLabel" type="Label" parent="VBoxContainer" unique_id=2065872195]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="StatsContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=526774808]
+layout_mode = 2
+
+[node name="BtnUpgradeHP" type="Button" parent="VBoxContainer/StatsContainer" unique_id=1753865910]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BtnUpgradeATK" type="Button" parent="VBoxContainer/StatsContainer" unique_id=999955803]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BtnUpgradeDEF" type="Button" parent="VBoxContainer/StatsContainer" unique_id=478425563]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BtnUpgradeLUCK" type="Button" parent="VBoxContainer/StatsContainer" unique_id=2022646918]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="InventoryButton" type="Button" parent="VBoxContainer" unique_id=681372686]
 unique_name_in_owner = true
 layout_mode = 2
@@ -45,3 +68,8 @@ text = "Equipar Itens"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Avançar para o Combate"
+
+[node name="RepeatFloorButton" type="Button" parent="VBoxContainer" unique_id=134344687]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Explorar Novamente"

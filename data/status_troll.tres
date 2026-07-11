@@ -8,4 +8,5 @@ max_hp = 55
 base_attack = 11
 base_defense = 6
 base_luck = 2
+xp_reward = 85
 metadata/_custom_type_script = "uid://c17xjpglpupvk"

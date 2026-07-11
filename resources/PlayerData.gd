@@ -7,6 +7,10 @@ extends Resource
 
 @export_category("Base Stats")
 @export var stats: CharacterStats
+@export var current_level: int = 1
+@export var current_xp: int = 0
+@export var xp_required_for_next_level: int = 100
+@export var unspent_stat_points: int = 5
 
 
 @export_category("Passive Skill")

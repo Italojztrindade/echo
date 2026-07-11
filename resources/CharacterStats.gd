@@ -8,6 +8,7 @@ class_name CharacterStats
 @export var base_defense: int = 0
 @export var base_luck: int = 5 # Representa % de chance de crítico
 @export var max_mp: int = 5
+@export var xp_reward: int = 15 # Valor padrão
 
 # Função utilitária para facilitar se precisarmos duplicar/clonar status no futuro
 func get_clone() -> CharacterStats:
