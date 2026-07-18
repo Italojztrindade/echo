@@ -83,9 +83,9 @@ func _upgrade_stat(stat_type: String) -> void:
 			player.stats.max_hp += 5 # HP sobe de 5 em 5
 			RunManager.current_player_hp += 5 # Já cura o jogador na hora também!
 		"atk":
-			player.stats.base_attack += 10
+			player.stats.base_attack += 1
 		"def":
-			player.stats.base_defense += 10
+			player.stats.base_defense += 1
 		"luck":
 			player.stats.base_luck += 1
 			

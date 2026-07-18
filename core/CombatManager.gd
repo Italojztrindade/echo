@@ -178,6 +178,8 @@ func _deal_damage_to_enemy(amount: int) -> void:
 	
 	# 7. Verifica morte
 	if _enemy_current_hp <= 0:
+		var xp_ganha = _current_enemy_data.stats.xp_reward
+		_player_data.add_xp(xp_ganha)
 		_win_battle()
 		RunManager.current_player_hp = _player_current_hp
 		SignalBus.enemy_defeated.emit()

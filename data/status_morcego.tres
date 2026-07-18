@@ -9,4 +9,6 @@ base_attack = 3
 base_luck = 15
 max_mp = 2
 xp_reward = 9
+max_gold_drop = 8
+item_drop_chance = 1.0
 metadata/_custom_type_script = "uid://c17xjpglpupvk"

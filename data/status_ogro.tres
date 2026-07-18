@@ -9,4 +9,7 @@ base_attack = 15
 base_defense = 8
 max_mp = 10
 xp_reward = 300
+min_gold_drop = 75
+max_gold_drop = 110
+item_drop_chance = 25.0
 metadata/_custom_type_script = "uid://c17xjpglpupvk"
